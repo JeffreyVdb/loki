@@ -112,7 +112,7 @@ func TestFilterRequestForDay(t *testing.T) {
 		require.Equal(t, expected, output)
 	})
 
-	t.Run("empty response", func(t *testing.T) {
+	t.Run("empty response returns time range from input day", func(t *testing.T) {
 		input := &logproto.FilterChunkRefRequest{
 			From:    ts.Add(-168 * time.Hour), // 1w ago
 			Through: ts,
