@@ -10,6 +10,7 @@ import (
 	"os"
 	"sort"
 	"strconv"
+	"strings"
 	"sync"
 	"time"
 
@@ -207,6 +208,11 @@ func NewLifecycler(cfg LifecyclerConfig, flushTransferer FlushTransferer, ringNa
 	err = cfg.Validate()
 	if err != nil {
 		return nil, err
+	}
+
+	// Address should not contain square brackets. If it does, they should be removed first.
+	if strings.Contains(addr, ":") {
+		addr = strings.Trim(addr, "[]")
 	}
 
 	l := &Lifecycler{
